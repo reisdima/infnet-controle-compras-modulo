@@ -22,7 +22,7 @@ public class Compra implements Serializable {
     private String notaFiscal;
 
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<ItemDeCompra> produtos = new ArrayList<>();
+    private List<ItemDeCompra> itensDeCompra = new ArrayList<>();
 
     private String estabelecimento;
 
@@ -31,7 +31,7 @@ public class Compra implements Serializable {
         return "Compra{" +
                 "id=" + id +
                 ", dataDaCompra=" + dataDaCompra +
-                ", produtos=" + produtos +
+                ", produtos=" + itensDeCompra +
                 ", estabelecimento='" + estabelecimento + '\'' +
                 '}';
     }
@@ -52,12 +52,12 @@ public class Compra implements Serializable {
         this.dataDaCompra = dataDaCompra;
     }
 
-    public List<ItemDeCompra> getProdutos() {
-        return produtos;
+    public List<ItemDeCompra> getItensDeCompra() {
+        return itensDeCompra;
     }
 
-    public void setProdutos(List<ItemDeCompra> produtos) {
-        this.produtos = produtos;
+    public void setItensDeCompra(List<ItemDeCompra> itensDeCompra) {
+        this.itensDeCompra = itensDeCompra;
     }
 
     public String getEstabelecimento() {
@@ -78,7 +78,7 @@ public class Compra implements Serializable {
 
     public BigDecimal getValor() {
         BigDecimal total = BigDecimal.ZERO;
-        for (ItemDeCompra itemDeCompra : produtos) {
+        for (ItemDeCompra itemDeCompra : itensDeCompra) {
             BigDecimal subtotal = itemDeCompra.getPreco()
                     .multiply(BigDecimal.valueOf(itemDeCompra.getQuantidade()));
             total = total.add(subtotal);

@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +30,9 @@ public class Produto {
     private Integer quantidade;
 
     @NotNull(message = "A unidade do produto é obrigatória")
-    @Enumerated(EnumType.STRING)
-    private TipoUnidade unidade;
+//    @Enumerated(EnumType.STRING)
+    private String unidade;
+//    private TipoUnidade unidade;
 
     @OneToMany(mappedBy = "produto")
     private List<ItemDeCompra> itens = new ArrayList<>();
@@ -75,11 +75,11 @@ public class Produto {
         this.codigoDeBarras = codigoDeBarras;
     }
 
-    public TipoUnidade getUnidade() {
+    public @NotNull(message = "A unidade do produto é obrigatória") String getUnidade() {
         return unidade;
     }
 
-    public void setUnidade(TipoUnidade unidade) {
+    public void setUnidade(@NotNull(message = "A unidade do produto é obrigatória") String unidade) {
         this.unidade = unidade;
     }
 

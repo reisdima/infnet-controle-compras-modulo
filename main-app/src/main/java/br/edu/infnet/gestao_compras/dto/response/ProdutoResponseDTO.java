@@ -1,0 +1,70 @@
+package br.edu.infnet.gestao_compras.dto.response;
+
+import br.edu.infnet.gestao_compras.model.domain.Produto;
+
+public class ProdutoResponseDTO {
+
+    private Integer id;
+    private String marca;
+    private String codigoDeBarras;
+    private Integer quantidade;
+    private String unidade;
+    private String nome;
+
+    public ProdutoResponseDTO (Produto produto) {
+        this.marca = produto.getMarca();
+        this.nome = produto.getNome();
+        this.codigoDeBarras = produto.getCodigoDeBarras();
+        this.unidade = produto.getUnidade();
+        this.quantidade = produto.getQuantidade();
+        this.id = produto.getId();
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getCodigoDeBarras() {
+        return codigoDeBarras;
+    }
+
+    public void setCodigoDeBarras(String codigoDeBarras) {
+        this.codigoDeBarras = codigoDeBarras;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+}

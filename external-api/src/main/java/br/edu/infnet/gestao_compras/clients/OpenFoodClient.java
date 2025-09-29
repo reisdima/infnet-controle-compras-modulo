@@ -1,5 +1,6 @@
 package br.edu.infnet.gestao_compras.clients;
 
+import br.edu.infnet.gestao_compras.model.domain.OpenFoodProductResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,5 +9,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface OpenFoodClient {
 
     @GetMapping("/product/{codigoDeBarras}.json")
-    Object obterProduto(@PathVariable String codigoDeBarras);
+    OpenFoodProductResponse obterProduto(@PathVariable("codigoDeBarras") String codigoDeBarras);
 }

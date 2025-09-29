@@ -1,0 +1,11 @@
+Leite;Porto Alegre;1234567891234;500;ML
+Pipoca Doce;Kerus;9187964837960;1;UNIDADE
+Bombom;Lacta;9882690656624;1;UNIDADE
+Maionese;Hellmans;5831652139534;335;GRAMAS
+Resquinha de Coco;Rancheiro;9192473662478;500;GRAMAS
+Creme de leite;Italac;5814970014160;200;GRAMAS
+Mistura para bolo;Italac;8099035119759;400;GRAMAS
+Batata palha;Yoki;4036066944025;300;GRAMAS
+Molho de tomate tradicional;Heinz;4027354076952;240;GRAMAS
+Achocolatado em pó;Tody;8204978128978;750;GRAMAS
+Cereal Nescau;Nestlé;3635699994990;770;GRAMAS
