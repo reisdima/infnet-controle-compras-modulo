@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,10 +24,13 @@ public class CompraService {
 
     private final CompraRepository compraRepository;
     private final ProdutoService produtoService;
+    private final ItemService itemService;
 
-    public CompraService(CompraRepository compraRepository, ProdutoService produtoService) {
+    public CompraService(CompraRepository compraRepository, ProdutoService produtoService,
+                         ItemService itemService) {
         this.compraRepository = compraRepository;
         this.produtoService = produtoService;
+        this.itemService = itemService;
     }
 
 
@@ -40,13 +44,13 @@ public class CompraService {
 
         List<ItemDeCompra> listaDeItens = new ArrayList<>();
 
-        for (ItemDeCompraRequestDTO item : dto.getProdutos()) {
-            Produto produto = this.produtoService.obterProdutoPorCodigoDeBarras(item.getCodidoDeBarras());
-            if (produto == null) {
+        for (ItemDeCompraRequestDTO item : dto.getItens()) {
+            Optional<Produto> produto = this.produtoService.obterProdutoEntityPorCodigoDeBarras(item.getCodidoDeBarras());
+            if (produto.isEmpty()) {
                 throw new EntidadeNaoEncontradaException("Produto com codigo de barras " + item.getCodidoDeBarras() + " não encontrado.");
             }
             var itemDeCompra = new ItemDeCompra();
-            itemDeCompra.setProduto(produto);
+            itemDeCompra.setProduto(produto.get());
             itemDeCompra.setCompra(compra);
             itemDeCompra.setPreco(item.getPreco());
             itemDeCompra.setQuantidade(item.getQuantidade());
@@ -64,11 +68,10 @@ public class CompraService {
 
     @Transactional
     public CompraResponseDTO alterar(Integer id, CompraRequestDTO dto) {
-        obterPorId(id);
+
         validarCompra(dto);
 
-        Compra compraEncontrada = this.compraRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Compra com id " + id + " não encontrada."));
+        var compraEncontrada = obterPorId(id);
 
         if (!compraEncontrada.getNotaFiscal().equals(dto.getNotaFiscal())) {
             this.compraRepository.findByNotaFiscal(dto.getNotaFiscal())
@@ -78,39 +81,37 @@ public class CompraService {
             compraEncontrada.setNotaFiscal(dto.getNotaFiscal());
         }
 
+        // Atualiza itens da compra
+        if (dto.getItens() != null) {
+            List<ItemDeCompra> itensAtualizados = new ArrayList<>();
+            for (ItemDeCompraRequestDTO itemDto : dto.getItens()) {
+                ItemDeCompra itemDeCompra;
+                if (itemDto.getId() != null) {
+                    itemDeCompra = new ItemDeCompra();
+                    itemDeCompra.setId(itemDto.getId());
+                } else {
+                    itemDeCompra = this.itemService.obterPorId(itemDto.getId());
+                }
+                itemDeCompra.setCompra(compraEncontrada);
+                itemDeCompra.setPreco(itemDto.getPreco());
+                itemDeCompra.setQuantidade(itemDto.getQuantidade());
+                itensAtualizados.add(itemDeCompra);
+            }
+            compraEncontrada.getItensDeCompra().clear();
+            compraEncontrada.getItensDeCompra().addAll(itensAtualizados);
+        }
         compraEncontrada.setDataDaCompra(dto.getDataDaCompra());
         compraEncontrada.setEstabelecimento(dto.getEstabelecimento());
-
-        compraEncontrada.getItensDeCompra().clear();
-        List<ItemDeCompra> listaDeItens = new ArrayList<>();
-
-        for (ItemDeCompraRequestDTO item : dto.getProdutos()) {
-            Produto produto = this.produtoService.obterProdutoPorCodigoDeBarras(item.getCodidoDeBarras());
-            if (produto == null) {
-                throw new EntidadeNaoEncontradaException("Produto com codigo de barras " + item.getCodidoDeBarras() + " não encontrado.");
-            }
-            var itemDeCompra = new ItemDeCompra();
-            itemDeCompra.setProduto(produto);
-            itemDeCompra.setCompra(compraEncontrada);
-            itemDeCompra.setPreco(item.getPreco());
-            itemDeCompra.setQuantidade(item.getQuantidade());
-
-            listaDeItens.add(itemDeCompra);
-        }
-        compraEncontrada.setItensDeCompra(listaDeItens);
-
 
         return new CompraResponseDTO(compraRepository.save(compraEncontrada));
     }
 
 
-    public CompraResponseDTO obterPorId(Integer id) {
+    public Compra obterPorId(Integer id) {
         if (id == null || id < 0) {
-            throw new IllegalArgumentException("O ID para alteração é inválido!");
+            throw new IllegalArgumentException("O ID informado é inválido!");
         }
-        Compra compra = compraRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("A compra com ID " + id + " não foi encontrada!"));
-        CompraResponseDTO responseDto = new CompraResponseDTO(compra);
-        return responseDto;
+        return compraRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("A compra com ID " + id + " não foi encontrada!"));
     }
 
 
@@ -142,7 +143,7 @@ public class CompraService {
         if (compra == null) {
             throw new IllegalArgumentException("O compra não pode estar nulo!");
         }
-        if (compra.getProdutos() == null || compra.getProdutos().isEmpty()) {
+        if (compra.getItens() == null || compra.getItens().isEmpty()) {
             throw new IllegalArgumentException("A compra não pode ter lista de produtos vazia!");
         }
         if (compra.getDataDaCompra() == null) {

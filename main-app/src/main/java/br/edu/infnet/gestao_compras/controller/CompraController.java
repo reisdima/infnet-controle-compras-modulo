@@ -33,7 +33,7 @@ public class CompraController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CompraResponseDTO> obterPorId(@PathVariable Integer id) {
-        CompraResponseDTO compra = compraService.obterPorId(id);
+        CompraResponseDTO compra = new CompraResponseDTO(compraService.obterPorId(id));
         if (compra == null) {
             return ResponseEntity.noContent().build();
         }

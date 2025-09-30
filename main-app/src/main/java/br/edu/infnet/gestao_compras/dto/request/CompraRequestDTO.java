@@ -1,7 +1,5 @@
 package br.edu.infnet.gestao_compras.dto.request;
 
-import br.edu.infnet.gestao_compras.model.domain.ItemDeCompra;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +7,7 @@ import java.util.List;
 public class CompraRequestDTO {
 
     private LocalDate dataDaCompra;
-    private List<ItemDeCompraRequestDTO> produtos = new ArrayList<>();
+    private List<ItemDeCompraRequestDTO> itens = new ArrayList<>();
     private String estabelecimento;
     private String notaFiscal;
 
@@ -21,12 +19,12 @@ public class CompraRequestDTO {
         this.dataDaCompra = dataDaCompra;
     }
 
-    public List<ItemDeCompraRequestDTO> getProdutos() {
-        return produtos;
+    public List<ItemDeCompraRequestDTO> getItens() {
+        return itens;
     }
 
-    public void setProdutos(List<ItemDeCompraRequestDTO> produtos) {
-        this.produtos = produtos;
+    public void setItens(List<ItemDeCompraRequestDTO> itens) {
+        this.itens = itens;
     }
 
     public String getEstabelecimento() {

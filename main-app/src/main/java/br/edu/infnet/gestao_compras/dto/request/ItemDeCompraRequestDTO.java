@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class ItemDeCompraRequestDTO {
 
+    private Integer id;
     private String codidoDeBarras;
     private BigDecimal preco;
     private Integer quantidade;
@@ -34,4 +35,11 @@ public class ItemDeCompraRequestDTO {
         this.codidoDeBarras = codidoDeBarras;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

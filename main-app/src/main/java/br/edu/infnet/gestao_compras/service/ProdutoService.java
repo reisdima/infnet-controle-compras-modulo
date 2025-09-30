@@ -36,7 +36,7 @@ public class ProdutoService {
 
         Produto produto = new Produto();
         System.out.println("Procurando no banco...");
-        Optional<Produto> produtoDoBanco = this.produtoRepository.findByCodigoDeBarras(codigoDeBarras);
+        Optional<Produto> produtoDoBanco = this.obterProdutoEntityPorCodigoDeBarras(codigoDeBarras);
         if (produtoDoBanco.isPresent()) {
             System.out.println("Achou no banco");
             produto = produtoDoBanco.get();
@@ -56,6 +56,11 @@ public class ProdutoService {
 
         return new ProdutoResponseDTO(produto);
 
+    }
+
+    protected Optional<Produto> obterProdutoEntityPorCodigoDeBarras(String codigoDeBarras) {
+        Optional<Produto> produto = this.produtoRepository.findByCodigoDeBarras(codigoDeBarras);
+        return produto;
     }
 
     public ProdutoResponseDTO incluir(ProdutoRequestDTO dto) {
