@@ -94,12 +94,16 @@ public class ProdutoService {
         return new ProdutoResponseDTO(this.produtoRepository.save(produto));
     }
 
-    public ProdutoResponseDTO obterPorId(Integer id) {
+    public void excluir(Integer id) {
+        var produto = produtoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("O produto com ID " + id + " não foi encontrado!"));
+        produtoRepository.delete(produto);
+    }
+
+    public Produto obterPorId(Integer id) {
         if (id == null || id < 0) {
             throw new IllegalArgumentException("O ID para alteração é inválido!");
         }
-        Produto produto =  produtoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("O produto com ID " + id + " não foi encontrado!"));
-        return new ProdutoResponseDTO(produto);
+        return produtoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("O produto com ID " + id + " não foi encontrado!"));
     }
 
     public List<ProdutoResponseDTO> obterLista() {

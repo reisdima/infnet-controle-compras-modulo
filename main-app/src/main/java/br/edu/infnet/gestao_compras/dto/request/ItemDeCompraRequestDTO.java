@@ -8,6 +8,7 @@ public class ItemDeCompraRequestDTO {
     private String codidoDeBarras;
     private BigDecimal preco;
     private Integer quantidade;
+    private String notaFiscal;
 
 
 
@@ -41,5 +42,13 @@ public class ItemDeCompraRequestDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNotaFiscal() {
+        return notaFiscal;
+    }
+
+    public void setNotaFiscal(String notaFiscal) {
+        this.notaFiscal = notaFiscal;
     }
 }

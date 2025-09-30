@@ -1,6 +1,7 @@
 package br.edu.infnet.gestao_compras.controller;
 
-import br.edu.infnet.gestao_compras.model.domain.Produto;
+import br.edu.infnet.gestao_compras.dto.request.ProdutoRequestDTO;
+import br.edu.infnet.gestao_compras.dto.response.ProdutoResponseDTO;
 import br.edu.infnet.gestao_compras.service.ProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> obterLista() {
-        List<Produto> lista = produtoService.obterLista();
+    public ResponseEntity<List<ProdutoResponseDTO>> obterLista() {
+        List<ProdutoResponseDTO> lista = produtoService.obterLista();
         if (lista.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -26,8 +27,8 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> obterPorId(@PathVariable Integer id) {
-        Produto produto = produtoService.obterPorId(id);
+    public ResponseEntity<ProdutoResponseDTO> obterPorId(@PathVariable Integer id) {
+        ProdutoResponseDTO produto = new ProdutoResponseDTO(produtoService.obterPorId(id));
         if (produto == null) {
             return ResponseEntity.noContent().build();
         }
@@ -35,15 +36,13 @@ public class ProdutoController {
     }
 
     @GetMapping("/codigo/{codigoDeBarras}")
-    public ResponseEntity<Produto> obterPorId(@PathVariable String codigoDeBarras) {
-        Produto produto = this.produtoService.obterProdutoPorCodigoDeBarras(codigoDeBarras);
+    public ResponseEntity<ProdutoResponseDTO> obterPorId(@PathVariable String codigoDeBarras) {
+        ProdutoResponseDTO produto = this.produtoService.obterProdutoPorCodigoDeBarras(codigoDeBarras);
         if (produto == null) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(produto);
     }
-
-
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Integer id) {
@@ -52,23 +51,17 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> incluir(@Valid @RequestBody Produto produto) {
-        Produto novoProduto = produtoService.incluir(produto);
+    public ResponseEntity<ProdutoResponseDTO> incluir(@Valid @RequestBody ProdutoRequestDTO produto) {
+        ProdutoResponseDTO novoProduto = produtoService.incluir(produto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(novoProduto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Produto> alterar(@PathVariable Integer id, @RequestBody Produto produto) {
-        Produto produtoAlterado = produtoService.alterar(id, produto);
+    public ResponseEntity<ProdutoResponseDTO> alterar(@PathVariable Integer id, @RequestBody ProdutoRequestDTO produto) {
+        ProdutoResponseDTO produtoAlterado = produtoService.alterar(id, produto);
 
         return ResponseEntity.ok(produtoAlterado);
     }
 
-    @PatchMapping(value = "/{id}")
-    public ResponseEntity<Produto> alterarDiasValidade(@PathVariable Integer id, @RequestBody Integer diasValidade) {
-        Produto produtoAlterado = produtoService.trocarDataValidade(id, diasValidade);
-
-        return ResponseEntity.ok(produtoAlterado);
-    }
 }
