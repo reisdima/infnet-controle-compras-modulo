@@ -28,14 +28,14 @@ public class ProdutoService {
     }
 
     @Transactional
-    public ProdutoResponseDTO obterProdutoPorCodigoDeBarras(String codigoDeBarras) {
+    public Produto obterProdutoPorCodigoDeBarras(String codigoDeBarras) {
         if (codigoDeBarras == null || codigoDeBarras.isEmpty()) {
             throw new IllegalArgumentException("Codigo de barras informado é inválido");
         }
 
         Produto produto = new Produto();
         System.out.println("Procurando no banco...");
-        Optional<Produto> produtoDoBanco = this.obterProdutoEntityPorCodigoDeBarras(codigoDeBarras);
+        Optional<Produto> produtoDoBanco = this.produtoRepository.findByCodigoDeBarras(codigoDeBarras);
         if (produtoDoBanco.isPresent()) {
             System.out.println("Achou no banco");
             produto = produtoDoBanco.get();
@@ -47,18 +47,13 @@ public class ProdutoService {
             produto.setNome(clientResponse.getNome());
             produto.setUnidade(TipoUnidade.fromString(clientResponse.getUnidade()));
             produto.setQuantidade(clientResponse.getQuantidade());
-//            produto.setId(UUID.randomUUID());
 
             this.produtoRepository.save(produto);
 
         }
 
-        return new ProdutoResponseDTO(produto);
+        return produto;
 
-    }
-
-    protected Optional<Produto> obterProdutoEntityPorCodigoDeBarras(String codigoDeBarras) {
-        return this.produtoRepository.findByCodigoDeBarras(codigoDeBarras);
     }
 
     public ProdutoResponseDTO incluir(ProdutoRequestDTO dto) {

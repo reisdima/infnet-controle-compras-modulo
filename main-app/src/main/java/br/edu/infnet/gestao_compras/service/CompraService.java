@@ -45,12 +45,13 @@ public class CompraService {
         List<ItemDeCompra> listaDeItens = new ArrayList<>();
 
         for (ItemDeCompraRequestDTO item : dto.getItens()) {
-            Optional<Produto> produto = this.produtoService.obterProdutoEntityPorCodigoDeBarras(item.getCodigoDeBarras());
-            if (produto.isEmpty()) {
+            Produto produto = this.produtoService.obterProdutoPorCodigoDeBarras(item.getCodigoDeBarras());
+            if (produto == null) {
                 throw new EntidadeNaoEncontradaException("Produto com codigo de barras " + item.getCodigoDeBarras() + " não encontrado.");
             }
             var itemDeCompra = new ItemDeCompra();
-            itemDeCompra.setProduto(produto.get());
+//            itemDeCompra.setProduto(produto.get());
+            itemDeCompra.setProduto(produto);
             itemDeCompra.setCompra(compra);
             itemDeCompra.setPreco(item.getPreco());
             itemDeCompra.setQuantidade(item.getQuantidade());
@@ -90,7 +91,7 @@ public class CompraService {
                     itemDeCompra = new ItemDeCompra();
                     itemDeCompra.setCompra(compraEncontrada);
                     itemDeCompra.setProduto(this.produtoService
-                            .obterProdutoEntityPorCodigoDeBarras(itemDto.getCodigoDeBarras()).orElse(null));
+                            .obterProdutoPorCodigoDeBarras(itemDto.getCodigoDeBarras()));
                 } else {
                     itemDeCompra = this.itemService.obterPorId(itemDto.getId());
                 }
