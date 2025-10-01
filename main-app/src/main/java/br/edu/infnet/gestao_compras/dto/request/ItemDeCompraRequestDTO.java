@@ -5,11 +5,9 @@ import java.math.BigDecimal;
 public class ItemDeCompraRequestDTO {
 
     private Integer id;
-    private String codidoDeBarras;
+    private String codigoDeBarras;
     private BigDecimal preco;
     private Integer quantidade;
-    private String notaFiscal;
-
 
 
     public BigDecimal getPreco() {
@@ -28,12 +26,12 @@ public class ItemDeCompraRequestDTO {
         this.quantidade = quantidade;
     }
 
-    public String getCodidoDeBarras() {
-        return codidoDeBarras;
+    public String getCodigoDeBarras() {
+        return codigoDeBarras;
     }
 
-    public void setCodidoDeBarras(String codidoDeBarras) {
-        this.codidoDeBarras = codidoDeBarras;
+    public void setCodigoDeBarras(String codigoDeBarras) {
+        this.codigoDeBarras = codigoDeBarras;
     }
 
     public Integer getId() {
@@ -44,11 +42,4 @@ public class ItemDeCompraRequestDTO {
         this.id = id;
     }
 
-    public String getNotaFiscal() {
-        return notaFiscal;
-    }
-
-    public void setNotaFiscal(String notaFiscal) {
-        this.notaFiscal = notaFiscal;
-    }
 }

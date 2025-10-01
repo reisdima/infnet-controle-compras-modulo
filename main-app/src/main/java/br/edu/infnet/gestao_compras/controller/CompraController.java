@@ -32,16 +32,19 @@ public class CompraController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompraResponseDTO> obterPorId(@PathVariable Integer id) {
+    public ResponseEntity<CompraResponseDTO> obterPorId(@PathVariable("id") Integer id) {
         CompraResponseDTO compra = new CompraResponseDTO(compraService.obterPorId(id));
-        if (compra == null) {
-            return ResponseEntity.noContent().build();
-        }
+        return ResponseEntity.ok(compra);
+    }
+
+    @GetMapping("/notaFiscal/{notaFiscal}")
+    public ResponseEntity<CompraResponseDTO> obterPorNotaFiscal(@PathVariable("notaFiscal") String notaFiscal) {
+        CompraResponseDTO compra = new CompraResponseDTO(compraService.obterPorNotaFiscal(notaFiscal));
         return ResponseEntity.ok(compra);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+    public ResponseEntity<Void> excluir(@PathVariable("id") Integer id) {
         compraService.excluir(id);
         return ResponseEntity.noContent().build();
     }
@@ -54,7 +57,7 @@ public class CompraController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CompraResponseDTO> alterar(@PathVariable Integer id, @RequestBody CompraRequestDTO compra) {
+    public ResponseEntity<CompraResponseDTO> alterar(@PathVariable("id") Integer id, @RequestBody CompraRequestDTO compra) {
         CompraResponseDTO compraAlterada = compraService.alterar(id, compra);
 
         return ResponseEntity.ok(compraAlterada);

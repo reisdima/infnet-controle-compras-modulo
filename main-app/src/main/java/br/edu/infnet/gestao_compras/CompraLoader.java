@@ -60,7 +60,6 @@ public class CompraLoader implements ApplicationRunner {
                                 break;
                             }
                             ItemDeCompraRequestDTO item = parseToItemDeCompraDTO(linhaDeItens);
-                            item.setNotaFiscal(dto.getNotaFiscal());
                             itens.add(item);
                             linhaDeItens = leitura.readLine();
                             lineNumber++;
@@ -107,7 +106,7 @@ public class CompraLoader implements ApplicationRunner {
 
         ItemDeCompraRequestDTO dto = new ItemDeCompraRequestDTO();
 
-        dto.setCodidoDeBarras(campos[0].substring(1));
+        dto.setCodigoDeBarras(campos[0].substring(1));
         dto.setQuantidade(Integer.valueOf(campos[1]));
         dto.setPreco(new BigDecimal(campos[2]));
 

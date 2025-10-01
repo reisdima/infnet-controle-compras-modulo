@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/produtos")
 public class ProdutoController {
     private final ProdutoService produtoService;
 
@@ -27,7 +29,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDTO> obterPorId(@PathVariable Integer id) {
+    public ResponseEntity<ProdutoResponseDTO> obterPorId(@PathVariable("id") Integer id) {
         ProdutoResponseDTO produto = new ProdutoResponseDTO(produtoService.obterPorId(id));
         if (produto == null) {
             return ResponseEntity.noContent().build();
@@ -36,7 +38,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/codigo/{codigoDeBarras}")
-    public ResponseEntity<ProdutoResponseDTO> obterPorId(@PathVariable String codigoDeBarras) {
+    public ResponseEntity<ProdutoResponseDTO> obterPorId(@PathVariable("id") String codigoDeBarras) {
         ProdutoResponseDTO produto = this.produtoService.obterProdutoPorCodigoDeBarras(codigoDeBarras);
         if (produto == null) {
             return ResponseEntity.noContent().build();
@@ -45,7 +47,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+    public ResponseEntity<Void> excluir(@PathVariable("id") Integer id) {
         produtoService.excluir(id);
         return ResponseEntity.noContent().build();
     }
@@ -58,7 +60,7 @@ public class ProdutoController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProdutoResponseDTO> alterar(@PathVariable Integer id, @RequestBody ProdutoRequestDTO produto) {
+    public ResponseEntity<ProdutoResponseDTO> alterar(@PathVariable("id") Integer id, @RequestBody ProdutoRequestDTO produto) {
         ProdutoResponseDTO produtoAlterado = produtoService.alterar(id, produto);
 
         return ResponseEntity.ok(produtoAlterado);

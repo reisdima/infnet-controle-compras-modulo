@@ -1,12 +1,12 @@
 package br.edu.infnet.gestao_compras.dto.response;
 
-import br.edu.infnet.gestao_compras.dto.request.ItemDeCompraRequestDTO;
 import br.edu.infnet.gestao_compras.model.domain.ItemDeCompra;
 
 import java.math.BigDecimal;
 
 public class ItemDeCompraResponseDTO {
 
+    private Integer id;
     private ProdutoResponseDTO produto;
     private BigDecimal preco;
     private Integer quantidade;
@@ -18,6 +18,7 @@ public class ItemDeCompraResponseDTO {
         this.preco = itemDeCompra.getPreco();
         this.quantidade = itemDeCompra.getQuantidade();
         this.notaFiscal = itemDeCompra.getCompra().getNotaFiscal();
+        this.id = itemDeCompra.getId();
     }
 
 
@@ -52,5 +53,13 @@ public class ItemDeCompraResponseDTO {
 
     public void setNotaFiscal(String notaFiscal) {
         this.notaFiscal = notaFiscal;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

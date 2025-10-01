@@ -45,9 +45,9 @@ public class CompraService {
         List<ItemDeCompra> listaDeItens = new ArrayList<>();
 
         for (ItemDeCompraRequestDTO item : dto.getItens()) {
-            Optional<Produto> produto = this.produtoService.obterProdutoEntityPorCodigoDeBarras(item.getCodidoDeBarras());
+            Optional<Produto> produto = this.produtoService.obterProdutoEntityPorCodigoDeBarras(item.getCodigoDeBarras());
             if (produto.isEmpty()) {
-                throw new EntidadeNaoEncontradaException("Produto com codigo de barras " + item.getCodidoDeBarras() + " não encontrado.");
+                throw new EntidadeNaoEncontradaException("Produto com codigo de barras " + item.getCodigoDeBarras() + " não encontrado.");
             }
             var itemDeCompra = new ItemDeCompra();
             itemDeCompra.setProduto(produto.get());
@@ -86,13 +86,14 @@ public class CompraService {
             List<ItemDeCompra> itensAtualizados = new ArrayList<>();
             for (ItemDeCompraRequestDTO itemDto : dto.getItens()) {
                 ItemDeCompra itemDeCompra;
-                if (itemDto.getId() != null) {
+                if (itemDto.getId() == null) {
                     itemDeCompra = new ItemDeCompra();
-                    itemDeCompra.setId(itemDto.getId());
+                    itemDeCompra.setCompra(compraEncontrada);
+                    itemDeCompra.setProduto(this.produtoService
+                            .obterProdutoEntityPorCodigoDeBarras(itemDto.getCodigoDeBarras()).orElse(null));
                 } else {
                     itemDeCompra = this.itemService.obterPorId(itemDto.getId());
                 }
-                itemDeCompra.setCompra(compraEncontrada);
                 itemDeCompra.setPreco(itemDto.getPreco());
                 itemDeCompra.setQuantidade(itemDto.getQuantidade());
                 itensAtualizados.add(itemDeCompra);

@@ -9,16 +9,18 @@ import java.util.stream.Collectors;
 
 public class CompraResponseDTO {
 
+    private Integer id;
     private LocalDate dataDaCompra;
-    private List<ItemDeCompraResponseDTO> produtos = new ArrayList<>();
+    private List<ItemDeCompraResponseDTO> itens = new ArrayList<>();
     private String estabelecimento;
     private String notaFiscal;
 
     public CompraResponseDTO (Compra compra) {
         this.dataDaCompra = compra.getDataDaCompra();
+        this.id = compra.getId();
         this.estabelecimento = compra.getEstabelecimento();
         this.notaFiscal = compra.getNotaFiscal();
-        this.produtos = compra.getItensDeCompra().stream()
+        this.itens = compra.getItensDeCompra().stream()
                 .map(ItemDeCompraResponseDTO::new).collect(Collectors.toList());
     }
 
@@ -30,12 +32,12 @@ public class CompraResponseDTO {
         this.dataDaCompra = dataDaCompra;
     }
 
-    public List<ItemDeCompraResponseDTO> getProdutos() {
-        return produtos;
+    public List<ItemDeCompraResponseDTO> getItens() {
+        return itens;
     }
 
-    public void setProdutos(List<ItemDeCompraResponseDTO> produtos) {
-        this.produtos = produtos;
+    public void setItens(List<ItemDeCompraResponseDTO> itens) {
+        this.itens = itens;
     }
 
     public String getEstabelecimento() {
@@ -52,5 +54,13 @@ public class CompraResponseDTO {
 
     public void setNotaFiscal(String notaFiscal) {
         this.notaFiscal = notaFiscal;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
