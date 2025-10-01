@@ -105,7 +105,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"dataDaCompra\": \"2025-05-18\",\r\n        \"notaFiscal\": \"66549\",\r\n        \"itens\": [\r\n            {\r\n                \"codigoDeBarras\": \"4036066944025\",\r\n                \"preco\": 15.60,\r\n                \"quantidade\": 1\r\n            }\r\n            \r\n        ],\r\n        \"estabelecimento\": \"Atacadão\"\r\n    }",
+							"raw": "{\r\n        \"dataDaCompra\": \"2025-05-18\",\r\n        \"notaFiscal\": \"66549\",\r\n        \"itens\": [\r\n            {\r\n                \"codigoDeBarras\": \"7896024761651\",\r\n                \"preco\": 15.60,\r\n                \"quantidade\": 1\r\n            },\r\n            {\r\n                \"codigoDeBarras\": \"4036066944025\",\r\n                \"preco\": 13.20,\r\n                \"quantidade\": 2\r\n            }\r\n            \r\n        ],\r\n        \"estabelecimento\": \"Atacadão\"\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"

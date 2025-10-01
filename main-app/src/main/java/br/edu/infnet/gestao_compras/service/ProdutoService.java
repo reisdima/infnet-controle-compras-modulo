@@ -9,6 +9,7 @@ import br.edu.infnet.gestao_compras.model.domain.enums.TipoUnidade;
 import br.edu.infnet.gestao_compras.model.domain.exceptions.EntidadeInvalidaException;
 import br.edu.infnet.gestao_compras.model.domain.exceptions.EntidadeNaoEncontradaException;
 import br.edu.infnet.gestao_compras.repository.ProdutoRepository;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -41,14 +42,19 @@ public class ProdutoService {
             produto = produtoDoBanco.get();
         } else {
             System.out.println("Buscando no client...");
-            OpenFoodProductResponse clientResponse = this.openFoodClient.obterProduto(codigoDeBarras);
-            produto.setCodigoDeBarras(codigoDeBarras);
-            produto.setMarca(clientResponse.getMarca());
-            produto.setNome(clientResponse.getNome());
-            produto.setUnidade(TipoUnidade.fromString(clientResponse.getUnidade()));
-            produto.setQuantidade(clientResponse.getQuantidade());
+            try {
 
-            this.produtoRepository.save(produto);
+                OpenFoodProductResponse clientResponse = this.openFoodClient.obterProduto(codigoDeBarras);
+                produto.setCodigoDeBarras(codigoDeBarras);
+                produto.setMarca(clientResponse.getMarca());
+                produto.setNome(clientResponse.getNome());
+                produto.setUnidade(TipoUnidade.fromString(clientResponse.getUnidade()));
+                produto.setQuantidade(clientResponse.getQuantidade());
+
+                this.produtoRepository.save(produto);
+            } catch (FeignException.NotFound ex) {
+                throw new EntidadeNaoEncontradaException("Produto com codigo de barra " + codigoDeBarras + " não foi encontrado");
+            }
 
         }
 
