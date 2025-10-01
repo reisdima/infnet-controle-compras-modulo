@@ -2,11 +2,10 @@ package br.edu.infnet.gestao_compras.service;
 
 import br.edu.infnet.gestao_compras.clients.OpenFoodClient;
 import br.edu.infnet.gestao_compras.dto.request.ProdutoRequestDTO;
-import br.edu.infnet.gestao_compras.dto.response.CompraResponseDTO;
 import br.edu.infnet.gestao_compras.dto.response.ProdutoResponseDTO;
-import br.edu.infnet.gestao_compras.model.domain.Compra;
 import br.edu.infnet.gestao_compras.model.domain.OpenFoodProductResponse;
 import br.edu.infnet.gestao_compras.model.domain.Produto;
+import br.edu.infnet.gestao_compras.model.domain.enums.TipoUnidade;
 import br.edu.infnet.gestao_compras.model.domain.exceptions.EntidadeInvalidaException;
 import br.edu.infnet.gestao_compras.model.domain.exceptions.EntidadeNaoEncontradaException;
 import br.edu.infnet.gestao_compras.repository.ProdutoRepository;
@@ -46,7 +45,7 @@ public class ProdutoService {
             produto.setCodigoDeBarras(codigoDeBarras);
             produto.setMarca(clientResponse.getMarca());
             produto.setNome(clientResponse.getNome());
-            produto.setUnidade(clientResponse.getUnidade());
+            produto.setUnidade(TipoUnidade.fromString(clientResponse.getUnidade()));
             produto.setQuantidade(clientResponse.getQuantidade());
 //            produto.setId(UUID.randomUUID());
 
@@ -59,8 +58,7 @@ public class ProdutoService {
     }
 
     protected Optional<Produto> obterProdutoEntityPorCodigoDeBarras(String codigoDeBarras) {
-        Optional<Produto> produto = this.produtoRepository.findByCodigoDeBarras(codigoDeBarras);
-        return produto;
+        return this.produtoRepository.findByCodigoDeBarras(codigoDeBarras);
     }
 
     public ProdutoResponseDTO incluir(ProdutoRequestDTO dto) {
@@ -72,7 +70,7 @@ public class ProdutoService {
         Produto produto = new Produto();
         produto.setNome(dto.getNome());
         produto.setMarca(dto.getMarca());
-        produto.setUnidade(dto.getUnidade());
+        produto.setUnidade(TipoUnidade.fromString(dto.getUnidade()));
         produto.setCodigoDeBarras(dto.getCodigoDeBarras());
         produto.setQuantidade(dto.getQuantidade());
 
@@ -86,7 +84,7 @@ public class ProdutoService {
         Produto produto = new Produto();
         produto.setNome(dto.getNome());
         produto.setMarca(dto.getMarca());
-        produto.setUnidade(dto.getUnidade());
+        produto.setUnidade(TipoUnidade.fromString(dto.getUnidade()));
         produto.setCodigoDeBarras(dto.getCodigoDeBarras());
         produto.setQuantidade(dto.getQuantidade());
         produto.setId(id);

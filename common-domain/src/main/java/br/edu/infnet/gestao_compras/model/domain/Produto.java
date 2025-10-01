@@ -30,9 +30,8 @@ public class Produto {
     private Integer quantidade;
 
     @NotNull(message = "A unidade do produto é obrigatória")
-//    @Enumerated(EnumType.STRING)
-    private String unidade;
-//    private TipoUnidade unidade;
+    @Enumerated(EnumType.STRING)
+    private TipoUnidade unidade;
 
     @OneToMany(mappedBy = "produto")
     private List<ItemDeCompra> itens = new ArrayList<>();
@@ -75,12 +74,20 @@ public class Produto {
         this.codigoDeBarras = codigoDeBarras;
     }
 
-    public @NotNull(message = "A unidade do produto é obrigatória") String getUnidade() {
+    public @NotNull(message = "A unidade do produto é obrigatória") TipoUnidade getUnidade() {
         return unidade;
     }
 
-    public void setUnidade(@NotNull(message = "A unidade do produto é obrigatória") String unidade) {
+    public void setUnidade(@NotNull(message = "A unidade do produto é obrigatória") TipoUnidade unidade) {
         this.unidade = unidade;
+    }
+
+    public List<ItemDeCompra> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemDeCompra> itens) {
+        this.itens = itens;
     }
 
     public Integer getQuantidade() {

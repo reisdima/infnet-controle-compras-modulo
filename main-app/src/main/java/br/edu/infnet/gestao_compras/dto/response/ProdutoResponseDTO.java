@@ -15,7 +15,7 @@ public class ProdutoResponseDTO {
         this.marca = produto.getMarca();
         this.nome = produto.getNome();
         this.codigoDeBarras = produto.getCodigoDeBarras();
-        this.unidade = produto.getUnidade();
+        this.unidade = produto.getUnidade().toString();
         this.quantidade = produto.getQuantidade();
         this.id = produto.getId();
     }
