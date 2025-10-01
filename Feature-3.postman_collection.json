@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "4ffe7b8f-d4d5-459f-8a85-8be00503b9ad",
+		"name": "Feature-3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10181134"
+	},
+	"item": [
+		{
+			"name": "Compra",
+			"item": [
+				{
+					"name": "Obter compras",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/compras",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter compras por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/compras/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"compras",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Obter compras por id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/compras/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"compras",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Oct 2025 00:15:45 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"dataDaCompra\": \"2025-05-18\",\n    \"itens\": [\n        {\n            \"id\": 12,\n            \"produto\": {\n                \"id\": 8,\n                \"marca\": \"Yoki\",\n                \"codigoDeBarras\": \"4036066944025\",\n                \"quantidade\": 300,\n                \"unidade\": \"GRAMAS\",\n                \"nome\": \"Batata palha\"\n            },\n            \"preco\": 15.6,\n            \"quantidade\": 1,\n            \"notaFiscal\": \"66549\"\n        }\n    ],\n    \"estabelecimento\": \"Atacadão\",\n    \"notaFiscal\": \"66549\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Criar compra",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"dataDaCompra\": \"2025-05-18\",\r\n        \"notaFiscal\": \"66549\",\r\n        \"itens\": [\r\n            {\r\n                \"codigoDeBarras\": \"4036066944025\",\r\n                \"preco\": 15.60,\r\n                \"quantidade\": 1\r\n            }\r\n            \r\n        ],\r\n        \"estabelecimento\": \"Atacadão\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/compras",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar compra",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dataDaCompra\": \"2025-05-23\",\r\n    \"itens\": [\r\n        \r\n        {\r\n            \"codigoDeBarras\": \"8204978128978\",\r\n            \"preco\": 16.99,\r\n            \"quantidade\": 1\r\n        }\r\n    ],\r\n    \"estabelecimento\": \"Atacadão\",\r\n    \"notaFiscal\": \"66549\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/compras/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"compras",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Compra",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/compras/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"compras",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter compra por nota fiscal",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "200",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/compras/notaFiscal/123456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"compras",
+								"notaFiscal",
+								"123456"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Obter produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter produto por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/produtos/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"produtos",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar produto geral",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":  \"Escova de dente\",\r\n    \"marca\": \"Oral B\",\r\n    \"codigoDeBarras\": \"1234569564956\",\r\n    \"quantidade\": \"1\",\r\n    \"unidade\": \"unidade\",\r\n    \"preco\":  16.44,\r\n    \"categoria\":  \"Higiene\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"marca\": \"Rancheiro\",\r\n    \"codigoDeBarras\": \"9192473662478\",\r\n    \"quantidade\": 200,\r\n    \"unidade\": \"GRAMAS\",\r\n    \"nome\": \"Resquinha de Coco\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/produtos/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"produtos",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/produtos/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"produtos",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
