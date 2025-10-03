@@ -2,7 +2,6 @@ package br.edu.infnet.gestao_compras.controller;
 
 import br.edu.infnet.gestao_compras.dto.request.CompraRequestDTO;
 import br.edu.infnet.gestao_compras.dto.response.CompraResponseDTO;
-import br.edu.infnet.gestao_compras.model.domain.Compra;
 import br.edu.infnet.gestao_compras.service.CompraService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

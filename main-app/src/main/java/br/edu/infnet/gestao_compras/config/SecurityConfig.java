@@ -2,6 +2,7 @@ package br.edu.infnet.gestao_compras.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +25,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authorize ->
                 authorize.requestMatchers("/h2-console/**").permitAll()
+
+                .requestMatchers(HttpMethod.GET, "/api/compras").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(HttpMethod.POST, "/api/compras").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(HttpMethod.PUT, "/api/compras").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(HttpMethod.DELETE, "/api/compras/**").hasRole("ADMIN")
+
                 .anyRequest().authenticated()).httpBasic(withDefaults());
 
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
